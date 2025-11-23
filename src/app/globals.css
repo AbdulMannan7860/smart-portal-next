@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+:root {
+  --color-mint-500: oklch(0.72 0.11 178);
+  --color-primary: #6D0303;
+  --color-secondary: #DCDCDC;
+  --color-accent: #3C3C3C;
+  --font-primary: Inter, sans-serif;
+  --font-secondary: Lora, serif;
+}
+
+.color-mint-500 {
+  color: var(--color-mint-500);
+}
+
+.bg-mint-500 {
+  background-color: var(--color-mint-500);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.font-primary {
+  font-family: var(--font-primary);
+}
+
+.font-secondary {
+  font-family: var(--font-secondary);
+}
+
+
+
+/* Custom Scrollbar */
+.customScroll::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+}
+
+.customScroll::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.customScroll::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 8px;
+}
+
+.customScroll::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
+}
+
+.customScroll::-webkit-scrollbar-thumb:active {
+    background-color: var(--color-primary);
+}
+
+.customScroll::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+    background-color: transparent;
+}
+
+.react-calendar {
+    border: none !important;
+}
+
+.react-calendar__tile {
+    height: 50px;
+    width: 50px;
+    border-radius: 50% !important;
+}
+
+.react-calendar__tile--active {
+    background-color: #fffefe !important;
+    color: white !important;
+}
+
+.selected-date {
+    background-color: #6D0303 !important; /* Maroon */
+    color: white !important;
+    border-radius: 50% !important;
+    font-weight: bold;
+}
+
+.react-calendar__tile:enabled:hover {
+    background-color: #fff1f1 !important;
+    color: inherit !important;
+    border-radius: 999999px !important;
+}
+
+.react-calendar__tile--now {
+    border: 2px solid #6D0303 !important; 
+    background-color: transparent !important;
+    color: #6D0303 !important; 
+    border-radius: 50% !important;
+    font-weight: bold;
+}
+
+.react-calendar__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Custom styles - Tailwind is imported in index.css */
+
+/* Custom Scrollbar */
+.customScroll::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+.customScroll::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.customScroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 8px;
+}
+
+.customScroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
+
+.customScroll::-webkit-scrollbar-thumb:active {
+  background-color: var(--color-primary);
+}
+
+.customScroll::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+  background-color: transparent;
+}
+
+
+.react-calendar {
+  border: none !important;
+}
+
+.react-calendar__tile {
+  height: 50px;
+  width: 50px;
+  border-radius: 50% !important;
+}
+
+.react-calendar__tile--active {
+  background-color: #fffefe !important;
+  color: white !important;
+}
+.selected-date {
+  background-color: #6D0303 !important; /* Maroon */
+  color: white !important;
+  border-radius: 50% !important;
+  font-weight: bold;
+}
+
+.react-calendar__tile:enabled:hover {
+  background-color: #fff1f1 !important;
+  color: inherit !important;
+  border-radius: '999999px' !important;
+}
+
+.react-calendar__tile--now {
+  border: 2px solid #6D0303 !important; 
+  background-color: transparent !important;
+  color: #6D0303 !important; 
+  border-radius: 50% !important;
+  font-weight: bold;
+}
+
+.react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
