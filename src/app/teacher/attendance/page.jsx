@@ -1,6 +1,6 @@
 'use client'
 
-import TeacherAttendance from '../../../pages/Teacher Portal/Attendance'
+import TeacherAttendance from '../../../pages-components/Teacher Portal/Attendance'
 import TeacherLayout from '@/Layout/Teacher Layout'
 
 export default function TeacherAttendancePage() {

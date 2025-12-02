@@ -4,11 +4,17 @@ import GetContext from "../../Context/GetContext/GetContext";
 import PostContext from "@/Context/PostContext/PostContext";
 
 const StudentProfile = () => {
-  const student = JSON.parse(localStorage.getItem("student"));
   const conntext = useContext(GetContext);
   const { getDataFromApi } = conntext;
 
   const [studentData, setStudentData] = useState({});
+
+  const [student, setStudent] = useState({});
+
+  useEffect(() => {
+    const student = JSON.parse(localStorage.getItem("student"));
+    setStudent(student);
+  }, []);
 
   const getData = async () => {
     const data = await getDataFromApi(`/api/auth/student-profile`);
@@ -55,10 +61,10 @@ const StudentProfile = () => {
               (studentData?.Cur_Semester === 1
                 ? "st "
                 : studentData?.Cur_Semester === 2
-                ? "nd "
-                : studentData?.Cur_Semester === 3
-                ? "rd "
-                : "th ")}{" "}
+                  ? "nd "
+                  : studentData?.Cur_Semester === 3
+                    ? "rd "
+                    : "th ")}{" "}
             Semester)
           </p>
         </div>

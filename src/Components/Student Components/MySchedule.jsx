@@ -4,7 +4,6 @@ import DataTable from "../Common/DataTable";
 import GetContext from "../../Context/GetContext/GetContext";
 
 const MySchedule = () => {
-  const student = JSON.parse(localStorage.getItem("student"));
   const context = useContext(GetContext);
   console.log(context);
   const { getDataFromApi } = context;
