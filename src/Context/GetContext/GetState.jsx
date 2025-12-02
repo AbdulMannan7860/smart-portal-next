@@ -20,14 +20,13 @@ const GetState = ({ children }) => {
           Authorization: token ? `Bearer ${token}` : "",
         },
       });
-
       const json = await response.json();
 
-      // if (response.status === 401) {
-      //   toast.error(json?.error || "Unauthorized");
-      //   window.location.href = "/";
-      //   return { success: false, error: json?.error || "Unauthorized" };
-      // }
+      if (response.status === 401) {
+        toast.error(json?.error || "Unauthorized");
+        window.location.href = "/";
+        return { success: false, error: json?.error || "Unauthorized" };
+      }
 
       if (!response.ok) {
         toast.error(json?.error || "Error fetching data");

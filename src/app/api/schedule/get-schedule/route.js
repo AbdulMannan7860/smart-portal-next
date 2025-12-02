@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import Schedule from "../../../lib/models/Schedule.model.js";
-import connectToMongoDB from "../../../lib/db.js";
-import fetchUser from "../../middleware/fetchUser.js";
+import Schedule from "@/app/lib/models/Schedule.model.js";
+import connectToMongoDB from "@/app/lib/db.js";
+import fetchUser from "@/app/api/middleware/fetchUser";
 import User from "@/app/lib/models/User.model.js";
 import Teacher from "@/app/lib/models/Teacher.model.js";
 

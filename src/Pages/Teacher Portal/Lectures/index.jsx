@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { sampleData } from "../../../MockData/Data";
 import { Plus, Eye, Download, Trash2 } from "lucide-react";
-import TeacherLayout from "../../../Layout/Teacher Layout";
+import TeacherLayout from "@/Layout/Teacher Layout";
 
 const LecturesPage = () => {
   const [showUploadForm, setShowUploadForm] = useState(false);

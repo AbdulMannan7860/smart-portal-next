@@ -17,6 +17,7 @@ export async function POST(req) {
         { status: authResult.status }
       );
     }
+
     const teacher = authResult.user;
 
     const formData = await req.formData();
@@ -30,6 +31,7 @@ export async function POST(req) {
 
     if (!file)
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+
     if (!courseCode || !teacherName || !day || !session || !room || !startTime)
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -48,35 +50,39 @@ export async function POST(req) {
     if (!schedules.length)
       return NextResponse.json({ error: "No schedule found" }, { status: 404 });
 
-    const semesters = [...new Set(schedules.map((s) => s.semester))];
+    const uniqueSemesters = [...new Set(schedules.map((s) => s.semester))];
 
-    // Prepare local folder path
+    const semesters = Array.from(
+      new Map(
+        schedules.map((s) => [
+          `${s.semester}_${s.program_title}`,
+          { semester: s.semester, program_title: s.program_title },
+        ])
+      ).values()
+    );
+
     const uploadsRoot = path.join(process.cwd(), "public", "course_outlines");
     const teacherFolder = path.join(uploadsRoot, teacher._id.toString());
     const courseFolder = path.join(teacherFolder, courseCode);
 
-    // Create folders if they don't exist
     [uploadsRoot, teacherFolder, courseFolder].forEach((folder) => {
       if (!fs.existsSync(folder)) fs.mkdirSync(folder, { recursive: true });
     });
 
-    // Save file locally
     const fileBuffer = Buffer.from(await file.arrayBuffer());
     const fileName = `${Date.now()}_${file.name}`;
     const filePath = path.join(courseFolder, fileName);
-
     fs.writeFileSync(filePath, fileBuffer);
 
-    // URL accessible from frontend
     const fileUrl = `/course_outlines/${teacher._id}/${courseCode}/${fileName}`;
 
-    const outlines = semesters.map((semester) => ({
+    const outlines = semesters.map((sem) => ({
       courseCode,
       courseName: schedules[0].courseName,
       credits: schedules[0].credits,
-      program_title: schedules[0].program_title,
+      program_title: sem.program_title,
       session: schedules[0].session,
-      semester,
+      semester: sem.semester,
       teacherName,
       teacherCode: schedules[0].teacherCode,
       fileUrl,
@@ -86,9 +92,10 @@ export async function POST(req) {
     await Outline.insertMany(outlines);
 
     return NextResponse.json({
-      success: "Outline uploaded successfully",
+      success: true,
+      message: "Outline uploaded successfully",
       fileUrl,
-      semesters,
+      semesters: uniqueSemesters,
     });
   } catch (error) {
     console.error(error);

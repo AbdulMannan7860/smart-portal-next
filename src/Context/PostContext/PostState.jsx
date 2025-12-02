@@ -9,7 +9,6 @@ const PostState = ({ children }) => {
 
   const postDataToApi = async (endpoint, formData) => {
     try {
-      // If endpoint starts with /api, use it directly, otherwise prepend host
       const url = endpoint.startsWith("/api")
         ? endpoint
         : `${host}/${endpoint}`;
@@ -24,7 +23,6 @@ const PostState = ({ children }) => {
         body: JSON.stringify(formData),
       });
 
-      // Check if response is JSON before parsing
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
         const text = await response.text();

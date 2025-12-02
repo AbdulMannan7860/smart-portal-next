@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "../../../lib/models/User.model.js";
-import connectToMongoDB from "../../../lib/db.js";
+import User from "@/app/lib/models/User.model.js";
+import connectToMongoDB from "@/app/lib/db.js";
 
 const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS) || 10;
 const PEPPER = process.env.PEPPER || "default_pepper";

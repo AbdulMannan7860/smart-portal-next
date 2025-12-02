@@ -10,19 +10,24 @@ const DashboardPage = () => {
   const { getDataFromApi } = context;
 
   const [scheduleData, setScheduleData] = useState([]);
+  const [strength, setStrength] = useState(0);
 
   const getCourses = async () => {
     const response = await getDataFromApi("/api/schedule/get-schedule");
     setScheduleData(response.data);
   };
 
+  const getStudents = async () => {
+    const response = await getDataFromApi(
+      "/api/student/get-total-students"
+    );
+    setStrength(response.data.length);
+  }
+
   useEffect(() => {
     getCourses();
+    getStudents();
   }, []);
-
-  // code: "CCP231",
-  //     name: "Design & Analysis of Algorithm",
-  //     credits: 3,
 
   const courses = useMemo(() => {
     return (
@@ -30,6 +35,7 @@ const DashboardPage = () => {
         code: i.courseCode,
         name: i.courseName,
         credits: i.credits,
+        progTitle: i.program_title,
         semester: i.semester,
       })) || []
     );
@@ -100,7 +106,7 @@ const DashboardPage = () => {
     },
     {
       label: "Total Students",
-      value: "45",
+      value: strength || 0,
       icon: Users,
       color: "bg-green-600",
     },
@@ -261,6 +267,9 @@ const DashboardPage = () => {
                       Credits
                     </th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">
+                      Program
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">
                       Semester
                     </th>
                   </tr>
@@ -283,6 +292,9 @@ const DashboardPage = () => {
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-600">
                           {course.credits}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-600">
+                          {course?.progTitle || "N/A"}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-600">
                           {course.semester}

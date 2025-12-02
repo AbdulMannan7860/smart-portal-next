@@ -5,8 +5,9 @@ import GetContext from "../../Context/GetContext/GetContext";
 
 const MySchedule = () => {
   const student = JSON.parse(localStorage.getItem("student"));
-  const conntext = useContext(GetContext);
-  const { getDataFromApi } = conntext;
+  const context = useContext(GetContext);
+  console.log(context);
+  const { getDataFromApi } = context;
 
   const [scheduleData, setScheduleData] = useState([]);
 

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import fetchUser from "../../middleware/fetchUser";
 import User from "@/app/lib/models/User.model";
 import getLatestSemesterData from "@/app/lib/getLatestSemesterData";
+import Teacher from "@/app/lib/models/Teacher.model";
 
 const MASTER_DB_API_URL = process.env.MASTER_DB_API_URL || "";
 
@@ -115,11 +116,41 @@ export async function GET(request) {
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
     } else if (findUser.role === "Teacher") {
+      const findTeacher = await Teacher.findOne({ email: findUser.code });
+
+      if (!findTeacher) {
+        return NextResponse.json({ error: "Not Authorized" }, { status: 400 });
+      }
+
+      const courseOutlineList = await CourseOutline.find({
+        teacherCode: findTeacher.teacherID,
+      });
+
+      const uniqueMap = new Map();
+
+      for (const course of courseOutlineList) {
+        const fileName = course.fileUrl.split("/").pop(); // Extract filename
+
+        const key = `${course.courseCode}-${fileName}`;
+
+        if (!uniqueMap.has(key)) {
+          uniqueMap.set(key, {
+            courseCode: course.courseCode,
+            fileUrl: course.fileUrl,
+          });
+        }
+      }
+
+      const uniqueOutlines = Array.from(uniqueMap.values());
+
+      return NextResponse.json(
+        {
+          success: "Course Outline Fetched Successfully.",
+          data: uniqueOutlines,
+        },
+        { status: 200 }
+      );
     }
-
-    let courses;
-
-    return NextResponse.json(courses, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

@@ -1,42 +1,35 @@
-import { NextResponse } from 'next/server';
-import Assignment from '../../../lib/models/Assignment.model.js';
-import User from '../../../lib/models/User.model.js';
-import connectToMongoDB from '../../../lib/db.js';
-import fetchUser from '../../middleware/fetchUser.js';
+import { NextResponse } from "next/server";
+import Assignment from "@/app/lib/models/Assignment.model.js";
+import connectToMongoDB from "@/app/lib/db.js";
+import User from "@/app/lib/models/User.model.js";
+import fetchUser from "@/app/api/middleware/fetchUser";
 
 export async function GET(request) {
-    try {
-        await connectToMongoDB();
-        
-        const authResult = await fetchUser(request);
-        if (authResult.error) {
-            return NextResponse.json(
-                { error: authResult.error },
-                { status: authResult.status }
-            );
-        }
+  try {
+    await connectToMongoDB();
 
-        const user = authResult.user;
-
-        const validateUser = await User.findById(user._id);
-
-        if (!validateUser || validateUser.role !== "Teacher") {
-            return NextResponse.json(
-                { error: "Not Authorized" },
-                { status: 400 }
-            );
-        }
-
-        const teacherCode = validateUser.code;
-
-        const assignments = await Assignment.find({ teacherCode });
-
-        return NextResponse.json(assignments, { status: 200 });
-    } catch (error) {
-        return NextResponse.json(
-            { error: error.message },
-            { status: 500 }
-        );
+    const authResult = await fetchUser(request);
+    if (authResult.error) {
+      return NextResponse.json(
+        { error: authResult.error },
+        { status: authResult.status }
+      );
     }
-}
 
+    const user = authResult.user;
+
+    const validateUser = await User.findById(user._id);
+
+    if (!validateUser || validateUser.role !== "Teacher") {
+      return NextResponse.json({ error: "Not Authorized" }, { status: 400 });
+    }
+
+    const teacherCode = validateUser.code;
+
+    const assignments = await Assignment.find({ teacherCode });
+
+    return NextResponse.json(assignments, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
