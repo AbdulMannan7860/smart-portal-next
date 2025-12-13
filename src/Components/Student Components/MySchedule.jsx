@@ -5,7 +5,6 @@ import GetContext from "../../Context/GetContext/GetContext";
 
 const MySchedule = () => {
   const context = useContext(GetContext);
-  console.log(context);
   const { getDataFromApi } = context;
 
   const [scheduleData, setScheduleData] = useState([]);

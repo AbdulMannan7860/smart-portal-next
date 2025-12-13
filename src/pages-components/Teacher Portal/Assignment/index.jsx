@@ -71,7 +71,6 @@ const AssignmentsPage = () => {
     getData();
     getAssignments();
   }, []);
-  console.log("Assignments:", assignments);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

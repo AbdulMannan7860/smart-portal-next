@@ -20,7 +20,7 @@ export async function POST(request) {
 
     const user = authResult.user;
     const { fileUrl } = await request.json();
-    console.log("Received fileUrl:", fileUrl);
+    
     if (!fileUrl) {
       return NextResponse.json(
         { error: "File URL is required" },

@@ -35,7 +35,6 @@ function Registration() {
     }
 
     const data = await postDataToApi('/api/auth/student-register', formData);
-    console.log(data);
 
   };
 
