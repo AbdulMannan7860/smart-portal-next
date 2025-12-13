@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import Assignment from "../../../lib/models/Assignment.model.js";
-import Student from "../../../lib/models/Student.model.js";
-import User from "../../../lib/models/User.model.js";
-import connectToMongoDB from "../../../lib/db.js";
-import fetchUser from "../../middleware/fetchUser";;
+import Assignment from "../../../../lib/models/Assignment.model.js";
+import Student from "../../../../lib/models/Student.model.js";
+import User from "../../../../lib/models/User.model.js";
+import connectToMongoDB from "../../../../lib/db.js";
+import fetchUser from "../../../middleware/fetchUser.js";;
 
 export async function GET(request, { params }) {
   try {
