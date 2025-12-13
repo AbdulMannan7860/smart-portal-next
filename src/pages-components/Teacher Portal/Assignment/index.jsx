@@ -1,13 +1,92 @@
 // Assignments Page
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { sampleData } from "../../../MockData/Data";
 import { Plus, Edit2 } from "lucide-react";
-import TeacherLayout from "@/Layout/Teacher Layout";
+import TeacherLayout from "../../../Layout/Teacher Layout";
+import GetContext from "../../../Context/GetContext/GetContext";
+import PostContext from "../../../Context/PostContext/PostContext";
+import { toast } from "react-toastify";
 
 const AssignmentsPage = () => {
+  const context = useContext(GetContext);
+  const { getDataFromApi } = context;
+
+  const postContext = useContext(PostContext);
+  const { postDataToApi } = postContext;
+
   const [activeTab, setActiveTab] = useState("view");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
+  const [assignments, setAssignments] = useState([]);
+
+  const [days, setDays] = useState(null);
+  const [courses, setCourses] = useState(null);
+  const [sessions, setSessions] = useState(null);
+
+  const [formData, setFormData] = useState({
+    courseCode: "",
+    title: "",
+    description: "",
+    dueDate: "",
+    marks: "",
+    session: "",
+    day: "",
+  });
+
+  const getData = async () => {
+    const response = await getDataFromApi("/api/schedule/get-schedule");
+
+    const mergedCourses = Object.values(
+      response.data.reduce((acc, item) => {
+        if (!acc[item.courseCode]) {
+          acc[item.courseCode] = {
+            courseCode: item.courseCode,
+            courseName: item.courseName,
+            details: [],
+          };
+        }
+
+        acc[item.courseCode].details.push({
+          semester: item.semester,
+          program: item.program_title,
+          session: item.session,
+          day: item.day,
+        });
+
+        return acc;
+      }, {})
+    );
+
+    setCourses(mergedCourses);
+    setDays([...new Set(response.data.map((i) => i.day))]);
+    setSessions([...new Set(response.data.map((i) => i.session))]);
+  };
+
+  const getAssignments = async () => {
+    const response = await getDataFromApi("/api/assignment/get-assignment-by-teacher-code");
+    setAssignments(response.data);
+  }
+
+  useEffect(() => {
+    getData();
+    getAssignments();
+  }, []);
+  console.log("Assignments:", assignments);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await postDataToApi("/api/assignment/create-assignment", formData);
+    if (response.success) {
+      toast.success("Assignment created successfully!");
+      setShowCreateForm(false);
+    } else {
+      toast.error("Error creating assignment: " + response.error);
+    }
+  };
 
   return (
     <TeacherLayout>
@@ -24,21 +103,19 @@ const AssignmentsPage = () => {
           <div className="flex border-b border-gray-200">
             <button
               onClick={() => setActiveTab("create")}
-              className={`flex-1 px-6 py-4 font-medium transition-colors ${
-                activeTab === "create"
-                  ? "text-red-800 border-b-2 border-red-800 bg-red-50"
-                  : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
-              }`}
+              className={`flex-1 px-6 py-4 font-medium transition-colors ${activeTab === "create"
+                ? "text-red-800 border-b-2 border-red-800 bg-red-50"
+                : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
+                }`}
             >
               Upload Assignment
             </button>
             <button
               onClick={() => setActiveTab("view")}
-              className={`flex-1 px-6 py-4 font-medium transition-colors ${
-                activeTab === "view"
-                  ? "text-red-800 border-b-2 border-red-800 bg-red-50"
-                  : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
-              }`}
+              className={`flex-1 px-6 py-4 font-medium transition-colors ${activeTab === "view"
+                ? "text-red-800 border-b-2 border-red-800 bg-red-50"
+                : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
+                }`}
             >
               Uploaded Assignments
             </button>
@@ -66,11 +143,11 @@ const AssignmentsPage = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Course
                         </label>
-                        <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                        <select name="courseCode" onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
                           <option value="">Select Course</option>
-                          {sampleData.courses.map((course) => (
-                            <option key={course.code} value={course.code}>
-                              {course.name}
+                          {courses.map((course) => (
+                            <option key={course._id} value={course.courseCode}>
+                              {course.courseName}
                             </option>
                           ))}
                         </select>
@@ -81,6 +158,8 @@ const AssignmentsPage = () => {
                         </label>
                         <input
                           type="text"
+                          name="title"
+                          onChange={handleInputChange}
                           placeholder="Assignment Title"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
                         />
@@ -91,6 +170,8 @@ const AssignmentsPage = () => {
                         </label>
                         <input
                           type="date"
+                          name="dueDate"
+                          onChange={handleInputChange}
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
                         />
                       </div>
@@ -100,30 +181,36 @@ const AssignmentsPage = () => {
                         </label>
                         <input
                           type="number"
+                          name="marks"
+                          onChange={handleInputChange}
                           placeholder="e.g., 20"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Semester
+                          Day
                         </label>
-                        <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
-                          <option value="">Select Semester</option>
-                          <option value="1st">1st</option>
-                          <option value="3rd">3rd</option>
-                          <option value="5th">5th</option>
-                          <option value="6th">6th</option>
+                        <select name="day" onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                          <option value="">Select Day</option>
+                          {days.map((day) => (
+                            <option key={day} value={day}>
+                              {day}
+                            </option>
+                          ))}
                         </select>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Session
                         </label>
-                        <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                        <select name="session" onChange={handleInputChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
                           <option value="">Select Session</option>
-                          <option value="Morning">Morning</option>
-                          <option value="Evening">Evening</option>
+                          {sessions.map((session) => (
+                            <option key={session} value={session}>
+                              {session}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -133,12 +220,14 @@ const AssignmentsPage = () => {
                       </label>
                       <textarea
                         rows="4"
+                        name="description"
+                        onChange={handleInputChange}
                         placeholder="Enter assignment instructions..."
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
                       />
                     </div>
                     <div className="flex gap-3">
-                      <button className="px-6 py-2 bg-red-800 text-white rounded-lg hover:bg-red-900 transition-colors font-semibold">
+                      <button onClick={handleSubmit} className="px-6 py-2 bg-red-800 text-white rounded-lg hover:bg-red-900 transition-colors font-semibold">
                         Create Assignment
                       </button>
                       <button
@@ -156,12 +245,9 @@ const AssignmentsPage = () => {
             {/* View Tab */}
             {activeTab === "view" && (
               <div className="space-y-6">
-                {sampleData.assignments.map((assignment) => {
-                  const course = sampleData.courses.find(
-                    (c) => c.code === assignment.courseCode
-                  );
-                  const submissions = sampleData.submissions.filter(
-                    (s) => s.assignmentId === assignment.id
+                {assignments.map((assignment) => {
+                  const course = courses && courses.length > 0 && courses.find(
+                    (c) => c.courseCode === assignment.courseCode
                   );
 
                   return (
@@ -179,20 +265,25 @@ const AssignmentsPage = () => {
                               {course?.name} ({assignment.courseCode})
                             </p>
                             <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
-                              <span className="font-medium">
+                              <span className="font-semibold">
                                 Total Marks: {assignment.marks}
                               </span>
                               <span>Due: {assignment.dueDate}</span>
-                              <span>Semester: {assignment.semester}</span>
                               <span
-                                className={`px-2 py-1 rounded-full text-xs ${
-                                  assignment.session === "Morning"
-                                    ? "bg-yellow-100 text-yellow-700"
-                                    : "bg-purple-100 text-purple-700"
-                                }`}
+                                className={`px-2 py-1 rounded-full text-xs ${assignment.session === "Morning"
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : "bg-purple-100 text-purple-700"
+                                  }`}
                               >
                                 {assignment.session}
                               </span>
+                            </div>
+                            <div>
+                              {course?.details.map((info, i) => (
+                                <p key={i} className="text-sm text-gray-700">
+                                  {info.semester} — {info.program}
+                                </p>
+                              ))}
                             </div>
                           </div>
                           <button
@@ -212,20 +303,20 @@ const AssignmentsPage = () => {
                           </button>
                         </div>
                         <p className="text-sm text-gray-700 mt-3">
-                          {assignment.description}
+                          <b>Instructions:</b> {assignment.description}
                         </p>
                         <div className="mt-3 flex items-center gap-2">
                           <span className="text-sm font-medium text-gray-700">
                             Submissions:
                           </span>
                           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
-                            {submissions.length} / {assignment.submissions}
+                            {0} / {assignment?.submissions || 0}
                           </span>
                         </div>
                       </div>
 
                       {/* Submissions Table */}
-                      {selectedAssignment === assignment.id &&
+                      {/* {selectedAssignment === assignment.id &&
                         submissions.length > 0 && (
                           <div className="p-4">
                             <h5 className="font-semibold text-gray-800 mb-3">
@@ -300,11 +391,10 @@ const AssignmentsPage = () => {
                                         </td>
                                         <td className="px-4 py-3">
                                           <span
-                                            className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                                              sub.status === "graded"
-                                                ? "bg-green-100 text-green-700"
-                                                : "bg-orange-100 text-orange-700"
-                                            }`}
+                                            className={`px-2 py-1 rounded-full text-xs font-semibold ${sub.status === "graded"
+                                              ? "bg-green-100 text-green-700"
+                                              : "bg-orange-100 text-orange-700"
+                                              }`}
                                           >
                                             {sub.status}
                                           </span>
@@ -327,7 +417,7 @@ const AssignmentsPage = () => {
                               </table>
                             </div>
                           </div>
-                        )}
+                        )} */}
                     </div>
                   );
                 })}

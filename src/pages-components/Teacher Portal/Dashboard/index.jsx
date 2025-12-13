@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Calendar, BookOpen, Users, FileText, Clock } from "lucide-react";
-import TeacherLayout from "@/Layout/Teacher Layout";
-import { sampleData } from "@/MockData/Data";
-import GetContext from "@/Context/GetContext/GetContext";
-import { useProfileStore } from "@/app/store/profileStore";
+import TeacherLayout from "../../../Layout/Teacher Layout";
+import { sampleData } from "../../../MockData/Data";
+import GetContext from "../../../Context/GetContext/GetContext";
+import { useProfileStore } from "../../../app/store/profileStore";
 
 const DashboardPage = () => {
   const context = useContext(GetContext);
@@ -46,18 +46,37 @@ const DashboardPage = () => {
   const getTodaySchedule = () => {
     const today = new Date().toLocaleString("en-US", { weekday: "long" });
 
-    return scheduleData
-      .filter((item) => item.day === today)
-      .map((item) => ({
-        id: item._id,
-        courseCode: item.courseCode,
-        courseName: item.courseName,
-        day: item.day,
-        time: `${item.class_start_time} - ${item.class_end_time}`,
-        room: item.room,
-        semester: item.semester,
-        session: item.session,
-      }));
+    // Filter today's schedules
+    const todaysSchedules = scheduleData.filter((item) => item.day === today);
+
+    // Merge duplicates by key
+    const merged = Object.values(
+      todaysSchedules.reduce((acc, item) => {
+        const key = `${item.courseCode}_${item.day}_${item.class_start_time}-${item.class_end_time}_${item.room}_${item.session}`;
+
+        if (!acc[key]) {
+          acc[key] = {
+            id: item._id,
+            courseCode: item.courseCode,
+            courseName: item.courseName,
+            day: item.day,
+            time: `${item.class_start_time} - ${item.class_end_time}`,
+            room: item.room,
+            session: item.session,
+            semesters: [item.semester], // initialize array
+          };
+        } else {
+          // Add semester if not already present
+          if (!acc[key].semesters.includes(item.semester)) {
+            acc[key].semesters.push(item.semester);
+          }
+        }
+
+        return acc;
+      }, {})
+    );
+
+    return merged;
   };
 
   const schedule = useMemo(() => {
@@ -191,7 +210,7 @@ const DashboardPage = () => {
                           {item.time}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.room} • {item.semester} Semester
+                          Room: {item.room} • {item.semesters.join(", ")}
                         </p>
                       </div>
                     </div>

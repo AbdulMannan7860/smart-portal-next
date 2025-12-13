@@ -28,7 +28,7 @@ const Sidebar = ({
     { id: "/teacher/dashboard", label: "Dashboard", icon: Calendar },
     { id: "/teacher/schedule", label: "Class Schedule", icon: Clock },
     { id: "/teacher/courses", label: "Course Outline", icon: BookOpen },
-    { id: "/teacher/lectures", label: "Lecture Material", icon: Upload },
+    // { id: "/teacher/lectures", label: "Lecture Material", icon: Upload },
     { id: "/teacher/assignments", label: "Assignments", icon: FileText },
     { id: "/teacher/attendance", label: "Attendance", icon: CheckSquare },
   ];

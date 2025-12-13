@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/app/store/authStore";
+import { useAuthStore } from "../store/authStore";
 
 const useTempToken = () => {
   const token = useAuthStore((state) => state.tempToken);

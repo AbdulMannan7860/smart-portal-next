@@ -1,7 +1,7 @@
-import connectToMongoDB from "@/app/lib/db";
-import User from "@/app/lib/models/User.model";
+import connectToMongoDB from "../../../lib/db";
+import User from "../../../lib/models/User.model";
 import { NextResponse } from "next/server";
-import fetchUser from "@/app/api/middleware/fetchUser";
+import fetchUser from "../../../api/middleware/fetchUser";
 
 const MASTER_DB_API_URL = process.env.MASTER_DB_API_URL || "";
 

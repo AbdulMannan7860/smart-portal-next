@@ -1,7 +1,7 @@
 import React from "react";
 import AuthContext from "./AuthContext";
 import { toast } from "react-toastify";
-import { useAuthStore } from "@/app/store/authStore";
+import { useAuthStore } from "../../app/store/authStore";
 
 const AuthState = ({ children }) => {
   const login = async (reg_no, hashed_password, isTrue) => {

@@ -6,11 +6,11 @@ const courseOutlineSchema = new mongoose.Schema(
     courseName: { type: String, required: true },
     credits: { type: Number, required: true },
     program_title: { type: String, required: true },
-    session: { type: String, required: true }, 
+    session: { type: String, required: true },
     semester: { type: String, required: true },
     teacherName: { type: String, required: true },
     teacherCode: { type: String, required: true },
-    fileUrl: { type: String, required: true }, 
+    fileUrl: { type: String, required: true },
     expireAt: { type: Date, required: true },
   },
   {

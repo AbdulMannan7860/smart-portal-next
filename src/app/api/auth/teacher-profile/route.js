@@ -1,7 +1,7 @@
-import connectToMongoDB from "@/app/lib/db";
+import connectToMongoDB from "../../../lib/db";
 import { NextResponse } from "next/server";
 import fetchUser from "../../middleware/fetchUser";
-import Teacher from "@/app/lib/models/Teacher.model";
+import Teacher from "../../../lib/models/Teacher.model";
 
 export async function GET(request) {
   try {

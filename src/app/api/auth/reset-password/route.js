@@ -1,5 +1,5 @@
-import connectToMongoDB from "@/app/lib/db";
-import User from "@/app/lib/models/User.model";
+import connectToMongoDB from "../../../lib/db";
+import User from "../../../lib/models/User.model";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 

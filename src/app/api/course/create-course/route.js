@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import Course from "@/app/lib/models/Course.model.js";
-import connectToMongoDB from "@/app/lib/db.js";
-import fetchUser from "@/app/api/middleware/fetchUser";
+import Course from "../../../lib/models/Course.model.js";
+import connectToMongoDB from "../../../lib/db.js";
+import fetchUser from "../../middleware/fetchUser";;
 
 export async function POST(request) {
   try {

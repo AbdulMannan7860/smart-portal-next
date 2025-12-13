@@ -5,8 +5,8 @@ import Sidebar from "../Components/Teacher Components/Sidebar";
 import Marquee from "../Components/Common/Marquee";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
-import GetContext from "@/Context/GetContext/GetContext";
-import { useProfileStore } from "@/app/store/profileStore";
+import GetContext from "../Context/GetContext/GetContext";
+import { useProfileStore } from "../app/store/profileStore";
 
 const TeacherLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

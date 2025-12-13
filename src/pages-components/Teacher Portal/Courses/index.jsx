@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Delete, Download, Upload } from "lucide-react";
-import { sampleData } from "@/MockData/Data";
-import TeacherLayout from "@/Layout/Teacher Layout";
-import GetContext from "@/Context/GetContext/GetContext";
-import format24hto12hAMPM from "@/utils/format24hto12hAMPM";
-import PostContext from "@/Context/PostContext/PostContext";
-import Modal from "@/Components/Common/Modal";
+// import { sampleData } from "@/MockData/Data";
+import TeacherLayout from "../../../Layout/Teacher Layout";
+import GetContext from "../../../Context/GetContext/GetContext";
+import format24hto12hAMPM from "../../../utils/format24hto12hAMPM";
+import PostContext from "../../../Context/PostContext/PostContext";
+import Modal from "../../../Components/Common/Modal";
 import { toast } from "react-toastify";
 
 const CourseOutlinePage = () => {

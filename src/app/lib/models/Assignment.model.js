@@ -28,8 +28,8 @@ const assignmentSchema = new mongoose.Schema({
     session: {
         type: String
     },
-    semester: {
-        type: Array
+    day: {
+        type: String
     },
     assigmentFile: {
         type: String
@@ -47,7 +47,6 @@ const assignmentSchema = new mongoose.Schema({
     }
 });
 
-// Prevent model overwrite error in Next.js
 const Assignment = mongoose.models.Assignment || mongoose.model("Assignment", assignmentSchema);
 
 export default Assignment;

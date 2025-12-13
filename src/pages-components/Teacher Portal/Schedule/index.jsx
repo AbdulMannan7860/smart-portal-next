@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import GetContext from "@/Context/GetContext/GetContext";
-import { sampleData } from "@/MockData/Data";
-import TeacherLayout from "@/Layout/Teacher Layout";
-import format24hto12hAMPM from "@/utils/format24hto12hAMPM";
+import GetContext from "../../../Context/GetContext/GetContext";
+// import { sampleData } from "@/MockData/Data";
+import TeacherLayout from "../../../Layout/Teacher Layout";
+import format24hto12hAMPM from "../../../utils/format24hto12hAMPM";
 
 const SchedulePage = () => {
   const context = useContext(GetContext);

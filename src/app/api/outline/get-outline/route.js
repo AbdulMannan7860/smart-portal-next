@@ -1,10 +1,10 @@
-import connectToMongoDB from "@/app/lib/db";
-import CourseOutline from "@/app/lib/models/CourseOutline.model";
+import connectToMongoDB from "../../../lib/db";
+import CourseOutline from "../../../lib/models/CourseOutline.model";
 import { NextResponse } from "next/server";
 import fetchUser from "../../middleware/fetchUser";
-import User from "@/app/lib/models/User.model";
-import getLatestSemesterData from "@/app/lib/getLatestSemesterData";
-import Teacher from "@/app/lib/models/Teacher.model";
+import User from "../../../lib/models/User.model";
+import getLatestSemesterData from "../../../lib/getLatestSemesterData";
+import Teacher from "../../../lib/models/Teacher.model";
 
 const MASTER_DB_API_URL = process.env.MASTER_DB_API_URL || "";
 

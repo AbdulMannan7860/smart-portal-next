@@ -20,6 +20,8 @@ const Sidebar = () => {
             setActive(3)
         } else if (path === '/student/result') {
             setActive(4);
+        } else if (path === '/student/course-registration-form') {
+            setActive(5);
         }
     },
         [path])
@@ -61,6 +63,25 @@ const Sidebar = () => {
                 )}
 
                 {renderLink('/student/result', 4, 'Result',
+                    <>
+                        <g>
+                            <path d="M16 4H7V3H16V4ZM19 5H7V6H19V5ZM16 7H11V8H16V7ZM21 7H17V8H21V7ZM11 10H15V9H11V10ZM20 9H16V10H20V9ZM11 12H15V11H11V12ZM20 11H16V12H20V11ZM21 3H17V4H21V3ZM7 14H15V13H7V14ZM16 14H22V13H16V14ZM20 6H23V5H20V6ZM26 1.5V16.5C26 16.8978 25.842 17.2794 25.5607 17.5607C25.2794 17.842 24.8978 18 24.5 18H5.5C5.10218 18 4.72064 17.842 4.43934 17.5607C4.15804 17.2794 4 16.8978 4 16.5V1.5C4 1.10218 4.15804 0.720644 4.43934 0.43934C4.72064 0.158035 5.10218 0 5.5 0H24.5C24.8978 0 25.2794 0.158035 25.5607 0.43934C25.842 0.720644 26 1.10218 26 1.5ZM25 1.75C25 1.55109 24.921 1.36032 24.7803 1.21967C24.6397 1.07902 24.4489 1 24.25 1H5.75C5.55109 1 5.36032 1.07902 5.21967 1.21967C5.07902 1.36032 5 1.55109 5 1.75V16.25C5 16.4489 5.07902 16.6397 5.21967 16.7803C5.36032 16.921 5.55109 17 5.75 17H24.25C24.4489 17 24.6397 16.921 24.7803 16.7803C24.921 16.6397 25 16.4489 25 16.25V1.75Z" />
+                        </g>
+                        <defs xmlns="http://www.w3.org/2000/svg">
+                            <filter id="filter0_d_2042_96" x="0" y="0" width="30" height="26" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                                <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                <feOffset dy="4" />
+                                <feGaussianBlur stdDeviation="2" />
+                                <feComposite in2="hardAlpha" operator="out" />
+                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2042_96" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2042_96" result="shape" />
+                            </filter>
+                        </defs>
+                    </>
+                )}
+                {renderLink('/student/course-registration-form', 5, 'CRF',
                     <>
                         <g>
                             <path d="M16 4H7V3H16V4ZM19 5H7V6H19V5ZM16 7H11V8H16V7ZM21 7H17V8H21V7ZM11 10H15V9H11V10ZM20 9H16V10H20V9ZM11 12H15V11H11V12ZM20 11H16V12H20V11ZM21 3H17V4H21V3ZM7 14H15V13H7V14ZM16 14H22V13H16V14ZM20 6H23V5H20V6ZM26 1.5V16.5C26 16.8978 25.842 17.2794 25.5607 17.5607C25.2794 17.842 24.8978 18 24.5 18H5.5C5.10218 18 4.72064 17.842 4.43934 17.5607C4.15804 17.2794 4 16.8978 4 16.5V1.5C4 1.10218 4.15804 0.720644 4.43934 0.43934C4.72064 0.158035 5.10218 0 5.5 0H24.5C24.8978 0 25.2794 0.158035 25.5607 0.43934C25.842 0.720644 26 1.10218 26 1.5ZM25 1.75C25 1.55109 24.921 1.36032 24.7803 1.21967C24.6397 1.07902 24.4489 1 24.25 1H5.75C5.55109 1 5.36032 1.07902 5.21967 1.21967C5.07902 1.36032 5 1.55109 5 1.75V16.25C5 16.4489 5.07902 16.6397 5.21967 16.7803C5.36032 16.921 5.55109 17 5.75 17H24.25C24.4489 17 24.6397 16.921 24.7803 16.7803C24.921 16.6397 25 16.4489 25 16.25V1.75Z" />

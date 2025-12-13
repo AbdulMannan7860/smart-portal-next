@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Heading from "../Common/Heading";
 import DataTable from "../Common/DataTable";
-import GetContext from "@/Context/GetContext/GetContext";
+import GetContext from "../../Context/GetContext/GetContext";
 
 const RegisteredCourses = () => {
   const conntext = useContext(GetContext);

@@ -1,8 +1,8 @@
-import connectToMongoDB from "@/app/lib/db";
+import connectToMongoDB from "../../../lib/db";
 import { NextResponse } from "next/server";
 import fetchUser from "../../middleware/fetchUser";
-import Schedule from "@/app/lib/models/Schedule.model";
-import Outline from "@/app/lib/models/CourseOutline.model";
+import Schedule from "../../../lib/models/Schedule.model";
+import Outline from "../../../lib/models/CourseOutline.model";
 import fs from "fs";
 import path from "path";
 

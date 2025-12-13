@@ -1,11 +1,72 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { sampleData } from "../../../MockData/Data";
 import { Plus, Eye, Download, Trash2 } from "lucide-react";
-import TeacherLayout from "@/Layout/Teacher Layout";
+import TeacherLayout from "../../../Layout/Teacher Layout";
+import GetContext from "../../../Context/GetContext/GetContext";
 
 const LecturesPage = () => {
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [scheduleData, setScheduleData] = useState([]);
+
+  const context = useContext(GetContext);
+  const { getDataFromApi } = context;
+
+  const [formData, setFormData] = useState({
+    courseCode: "",
+    teacherName: "",
+    day: "",
+    session: "",
+    room: 0,
+    startTime: "",
+    class_session: "",
+    file: "",
+  });
+
+  const getCourses = async () => {
+    const response = await getDataFromApi("/api/schedule/get-schedule");
+    setScheduleData(response.data);
+  };
+
+  useEffect(() => {
+    getCourses();
+  }, []);
+
+  const getUniqueCourses = () => {
+    const courseCodes = [
+      ...new Set(scheduleData.map((item) => item.courseName)),
+    ];
+
+    let data = []
+
+    for (const course of courseCodes) {
+      for (const schedule of scheduleData) {
+        if (schedule.courseName === course) {
+          data.push({
+            courseCode: schedule?.courseCode || "N/A",
+            courseName: schedule?.courseName || "N/A",
+          });
+          break;
+        }
+      }
+    }
+
+    return data;
+  };
+
+  const getUniqueSessions = () => {
+    const courseCodes = [
+      ...new Set(scheduleData.map((item) => item.session)),
+    ];
+    return courseCodes;
+  };
+
+
+  const uniqueCourses = useMemo(() => getUniqueCourses(), [scheduleData]);
+
+  console.log(uniqueCourses)
+
+  const uniqueSessions = useMemo(() => getUniqueSessions(), [scheduleData])
 
   const filteredLectures = selectedCourse
     ? sampleData.lectures.filter((l) => l.courseCode === selectedCourse)
@@ -15,7 +76,7 @@ const LecturesPage = () => {
     <TeacherLayout>
       <div className="space-y-6">
         <div className="bg-white rounded-xl shadow-md">
-          <div className="bg-red-800 text-white px-6 py-4 rounded-t-xl flex items-center justify-between z-[100]">
+          <div className="bg-red-800 text-white px-6 py-4 rounded-t-xl flex items-center justify-between z-100">
             <div>
               <h2 className="text-2xl font-bold">Lecture Materials</h2>
               <p className="text-red-100 text-sm mt-1">
@@ -38,7 +99,7 @@ const LecturesPage = () => {
                 <h3 className="text-lg font-bold text-gray-800 mb-4">
                   Upload New Lecture
                 </h3>
-                <div className="grid md:grid-cols-3 gap-4 mb-4">
+                <div className="grid md:grid-cols-4 gap-4 mb-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Topic
@@ -55,9 +116,22 @@ const LecturesPage = () => {
                     </label>
                     <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
                       <option value="">Select Course</option>
-                      {sampleData.courses.map((course) => (
-                        <option key={course.code} value={course.code}>
-                          {course.name}
+                      {/* {uniqueCourses.map((course, index) => (
+                        <option key={index} value={course.courseCode}>
+                          {course.courseName}
+                        </option>
+                      ))} */}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Session
+                    </label>
+                    <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                      <option value="">Select session</option>
+                      {uniqueSessions.map((session, index) => (
+                        <option key={index} value={session}>
+                          {session}
                         </option>
                       ))}
                     </select>

@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 
 const Header = ({ isSidebarOpen, setIsSidebarOpen }) => {
   return (
-    <header className="bg-gradient-to-r from-red-900 to-red-800 text-white shadow-lg">
+    <header className="bg-linear-to-r from-red-900 to-red-800 text-white shadow-lg">
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">

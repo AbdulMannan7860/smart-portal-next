@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Heading from "../Common/Heading";
 import GetContext from "../../Context/GetContext/GetContext";
-import PostContext from "@/Context/PostContext/PostContext";
 
 const StudentProfile = () => {
   const conntext = useContext(GetContext);
@@ -24,7 +23,7 @@ const StudentProfile = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(studentData?.Cur_Semester);
+  
   return (
     <div className="shadow-[6px_6px_10px_rgba(0,0,0,0.3),-2px_0px_5px_rgba(0,0,0,0.1)] overflow-hidden w-full">
       <Heading text="Profile" />

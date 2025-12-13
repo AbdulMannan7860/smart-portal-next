@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import QueryForm from '@/app/lib/models/QueryForm.model.js';
-import connectToMongoDB from '@/app/lib/db.js';
-import fetchUser from '@/app/api/middleware/fetchUser';
+import QueryForm from '../../../lib/models/QueryForm.model.js';
+import connectToMongoDB from '../../../lib/db.js';
+import fetchUser from "../../middleware/fetchUser";
 
 export async function GET(request) {
     try {

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import Attendance from "@/app/lib/models/Attendance.model.js";
-import Student from "@/app/lib/models/Student.model.js";
-import connectToMongoDB from "@/app/lib/db.js";
-import fetchUser from "@/app/api/middleware/fetchUser";
+import Attendance from "../../../lib/models/Attendance.model.js";
+import Student from "../../../lib/models/Student.model.js";
+import connectToMongoDB from "../../../lib/db.js";
+import fetchUser from "../../middleware/fetchUser";;
 
 export async function GET(request) {
   try {

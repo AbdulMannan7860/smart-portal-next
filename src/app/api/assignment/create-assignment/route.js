@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import Assignment from "@/app/lib/models/Assignment.model.js";
-import Student from "@/app/lib/models/Student.model.js";
-import Teacher from "@/app/lib/models/Teacher.model.js";
-import User from "@/app/lib/models/User.model.js";
-import connectToMongoDB from "@/app/lib/db.js";
+import Assignment from "../../../lib/models/Assignment.model.js";
+import Teacher from "../../../lib/models/Teacher.model.js";
+import User from "../../../lib/models/User.model.js";
+import connectToMongoDB from "../../../lib/db.js";
 import fetchUser from "../../middleware/fetchUser";
 
 export async function POST(request) {
@@ -22,7 +21,11 @@ export async function POST(request) {
 
     const validateUser = await User.findById(user._id);
 
-    const teacher = await Teacher.findOne({ teacherID: validateUser.code });
+    if (!validateUser) {
+      return NextResponse.json({ error: "Not Authorized" }, { status: 400 });
+    }
+
+    const teacher = await Teacher.findOne({ email: validateUser.code });
 
     if (!teacher || validateUser.role !== "Teacher") {
       return NextResponse.json({ error: "Not Authorized" }, { status: 400 });
@@ -35,31 +38,26 @@ export async function POST(request) {
       dueDate,
       marks,
       session,
-      semester,
+      day,
     } = await request.json();
 
-    const checkSemesterType = typeof semester;
-    if (checkSemesterType !== "string") {
-      return NextResponse.json(
-        { error: "Semester is not a string" },
-        { status: 400 }
-      );
-    }
+    const validateData = [
+      courseCode,
+      title,
+      description,
+      dueDate,
+      marks,
+      session,
+      day,
+    ];
 
-    const splitSemesterIfComma = semester.includes(",");
-
-    let semesterArray = [];
-    if (splitSemesterIfComma) {
-      const breakSemester = semester.split(",");
-      for (const s of breakSemester) {
-        semesterArray.push(s.trim());
+    for (const field of validateData) {
+      if (!field) {
+        return NextResponse.json(
+          { error: "Please provide all required fields. Missing field: " + field },
+          { status: 400 }
+        );
       }
-    }
-
-    const checkStudentCourses = await Student.findOne({ semester, session });
-
-    if (!checkStudentCourses) {
-      return NextResponse.json({ error: "No Student Found" }, { status: 400 });
     }
 
     const assignment = new Assignment({
@@ -70,12 +68,16 @@ export async function POST(request) {
       dueDate,
       marks,
       session,
-      semester: splitSemesterIfComma ? semesterArray : semester,
+      day,
     });
 
     await assignment.save();
 
-    return NextResponse.json(assignment, { status: 201 });
+    return NextResponse.json({
+      success: true,
+      message: "Assignment uploaded successfully",
+      assignment,
+    });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

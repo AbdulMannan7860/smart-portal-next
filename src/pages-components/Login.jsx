@@ -4,8 +4,8 @@ import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import Marquee from "@/Components/Common/Marquee";
-import AuthContext from "@/Context/AuthContext/AuthContext";
+import Marquee from "../Components/Common/Marquee";
+import AuthContext from "../Context/AuthContext/AuthContext";
 
 const Login = () => {
   const authContext = useContext(AuthContext);
@@ -31,7 +31,7 @@ const Login = () => {
         toast.warning("Please fill in all fields");
       }
       const response = await login(reg_no, hashed_password, isTrue);
-      
+
       if (response?.data?.Reg_No) {
         localStorage.setItem("student", JSON.stringify(response?.data));
         router.push("/student/student-dashboard");

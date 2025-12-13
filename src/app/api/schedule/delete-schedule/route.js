@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import Schedule from '@/app/lib/models/Schedule.model.js';
-import connectToMongoDB from '@/app/lib/db.js';
-import fetchUser from '@/app/api/middleware/fetchUser';
+import Schedule from '../../../lib/models/Schedule.model.js';
+import connectToMongoDB from '../../../lib/db.js';
+import fetchUser from "../../middleware/fetchUser";
 
 export async function DELETE(request) {
     try {

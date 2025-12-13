@@ -1,7 +1,7 @@
 import React from "react";
 import GetContext from "./GetContext";
 import { toast } from "react-toastify";
-import useTempToken from "@/app/hooks/useTempToken";
+import useTempToken from "../../app/hooks/useTempToken";
 
 const GetState = ({ children }) => {
   const host = process.env.MASTER_DB_API_URL;

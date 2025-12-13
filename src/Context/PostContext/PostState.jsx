@@ -1,7 +1,7 @@
 import React from "react";
 import PostContext from "./PostContext";
 import { toast } from "react-toastify";
-import useTempToken from "@/app/hooks/useTempToken";
+import useTempToken from "../../app/hooks/useTempToken";
 
 const PostState = ({ children }) => {
   const host = process.env.MASTER_DB_API_URL;

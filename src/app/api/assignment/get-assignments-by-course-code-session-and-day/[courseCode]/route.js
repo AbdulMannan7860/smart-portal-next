@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import Assignment from "@/app/lib/models/Assignment.model.js";
-import Student from "@/app/lib/models/Student.model.js";
-import User from "@/app/lib/models/User.model.js";
-import connectToMongoDB from "@/app/lib/db.js";
-import fetchUser from "@/app/api/middleware/fetchUser";
+import Assignment from "../../../lib/models/Assignment.model.js";
+import Student from "../../../lib/models/Student.model.js";
+import User from "../../../lib/models/User.model.js";
+import connectToMongoDB from "../../../lib/db.js";
+import fetchUser from "../../middleware/fetchUser";;
 
 export async function GET(request, { params }) {
   try {
@@ -25,11 +25,7 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: "Not Authorized" }, { status: 400 });
     }
 
-    const { courseCode } = params;
-
-    const student = await Student.findOne({ studentID: validateUser.code });
-
-    const { semester, session, allotedCourses } = student;
+    const { courseCode, day, session } = params;
 
     if (!student) {
       return NextResponse.json({ error: "No Student Found" }, { status: 400 });
@@ -38,9 +34,7 @@ export async function GET(request, { params }) {
     const assignments = await Assignment.find({
       courseCode,
       session,
-      semester: {
-        $in: Array.isArray(semester) ? semester : [semester],
-      },
+      day,
     });
 
     return NextResponse.json(assignments, { status: 200 });

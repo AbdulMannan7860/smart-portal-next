@@ -1,7 +1,7 @@
 'use client'
 
 import TeacherCourses from '../../../pages-components/Teacher Portal/Courses'
-import TeacherLayout from '@/Layout/Teacher Layout'
+import TeacherLayout from '../../../Layout/Teacher Layout'
 
 export default function TeacherCoursesPage() {
   return (

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "@/app/lib/models/User.model.js";
-import connectToMongoDB from "@/app/lib/db.js";
+import User from "../../../lib/models/User.model.js";
+import connectToMongoDB from "../../../lib/db.js";
 
 const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS) || 10;
 const PEPPER = process.env.PEPPER || "default_pepper";
@@ -34,7 +34,7 @@ export async function POST(request) {
       formData.append("reg_no", code);
       formData.append("hashed_password", password);
 
-      const masterDbResponse = await fetch(`${MASTER_DB_API_URL}/login`, {
+      const masterDbResponse = await fetch(`${MASTER_DB_API_URL}/students/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

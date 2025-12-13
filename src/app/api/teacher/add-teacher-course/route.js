@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import User from '@/app/lib/models/User.model.js';
-import Teacher from '@/app/lib/models/Teacher.model.js';
-import Course from '@/app/lib/models/Course.model.js';
-import connectToMongoDB from '@/app/lib/db.js';
-import fetchUser from '@/app/api/middleware/fetchUser';
+import User from '../../../lib/models/User.model.js';
+import Teacher from '../../../lib/models/Teacher.model.js';
+import Course from '../../../lib/models/Course.model.js';
+import connectToMongoDB from '../../../lib/db.js';
+import fetchUser from "../../middleware/fetchUser";
 
 const titleCase = (str) => {
     return str

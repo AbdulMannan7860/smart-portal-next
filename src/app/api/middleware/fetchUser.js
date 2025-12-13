@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import User from "@/app/lib/models/User.model.js";
+import User from "../../lib/models/User.model.js";
 
 const fetchUser = async (request) => {
   try {
