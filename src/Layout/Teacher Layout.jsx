@@ -36,7 +36,7 @@ const TeacherLayout = ({ children }) => {
       <Marquee />
 
       {/* Mobile Header with Hamburger */}
-      <div className="lg:hidden fixed top-10 left-0 right-0 bg-white border-b border-gray-200 z-[100000] px-4 py-3 flex items-center justify-between shadow-md">
+      <div className="lg:hidden fixed top-10 left-0 right-0 bg-white border-b border-gray-200 z-100000 px-4 py-3 flex items-center justify-between shadow-md">
         <button
           onClick={() => setIsSidebarOpen(true)}
           className="text-red-800 hover:bg-red-50 p-2 rounded-lg transition-colors"

@@ -107,7 +107,7 @@ const Sidebar = () => {
                     <div className="w-1 rounded-xl h-8 bg-transparent transition-colors duration-200 relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-[102%] translate-y-100 group-hover:translate-y-0 bg-red-600 transition-all duration-300"></div>
                     </div>
-                    <div className="group-hover:bg-white/10 w-full ml-[0.5rem] group-active:scale-95 self-stretch pl-2 rounded flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm">
+                    <div className="group-hover:bg-white/10 w-full ml-2 group-active:scale-95 self-stretch pl-2 rounded flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="h-5 w-5 group-hover:fill-red-600 dark:fill-black transition-colors duration-200" version="1.1" id="Layer_1" viewBox="0 0 64 64" enableBackground="new 0 0 64 64" xmlSpace="preserve">
                             <g id="Exit_1_">
                                 <path d="M52.4501991,28.7678509l-5-4.9990005c-0.3768997-0.3770008-0.9902-0.3770008-1.3671989,0   c-0.3778992,0.3778992-0.3778992,0.9902,0,1.3671989l3.3171997,3.3164005H35.2666016v2h14.1320992l-3.3157005,3.3163986   c-0.3778992,0.377903-0.3778992,0.9902,0,1.3672028c0.1884995,0.1884995,0.4365997,0.2831993,0.6835976,0.2831993   c0.2471008,0,0.4951019-0.0946999,0.6836014-0.2831993l5-5.0010014c0.1817017-0.1816006,0.2831993-0.4277,0.2831993-0.6835995   C52.7333984,29.1946507,52.6319008,28.9495506,52.4501991,28.7678509z" />
